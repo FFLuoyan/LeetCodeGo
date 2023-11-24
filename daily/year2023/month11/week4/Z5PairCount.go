@@ -1,13 +1,18 @@
 package main
 
+import (
+	"sort"
+)
+
 func countPairs(nums []int, target int) int {
-	result := 0
-	for i, left := range nums {
-		for _, right := range nums[i+1:] {
-			if left+right < target {
-				result++
-			}
+	result, start, end := 0, 0, len(nums)-1
+	sort.Ints(nums)
+	for start < end {
+		for start < end && nums[start]+nums[end] >= target {
+			end--
 		}
+		result += end - start
+		start++
 	}
 	return result
 }
