@@ -11,21 +11,15 @@ func pseudoPalindromicPaths(root *base.TreeNode) int {
 }
 
 func count(root *base.TreeNode, value int) {
-	value = value ^ (1 << root.Val)
-	if root.Left == nil {
-		if root.Right == nil {
-			if value == (value & -value) {
-				result++
-			}
-		} else {
-			count(root.Right, value)
-		}
-	} else if root.Right == nil {
-		count(root.Left, value)
-	} else {
-		count(root.Left, value)
-		count(root.Right, value)
+	if root == nil {
+		return
 	}
+	value = value ^ (1 << root.Val)
+	if root.Left == nil && root.Right == nil && value == (value&-value) {
+		result++
+	}
+	count(root.Left, value)
+	count(root.Right, value)
 }
 
 func main() {
