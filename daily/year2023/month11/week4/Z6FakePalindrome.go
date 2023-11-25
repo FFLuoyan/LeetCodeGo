@@ -12,15 +12,18 @@ func pseudoPalindromicPaths(root *base.TreeNode) int {
 
 func count(root *base.TreeNode, value int) {
 	value = value ^ (1 << root.Val)
-	if root.Left == nil && root.Right == nil {
-		if value == (value & -value) {
-			result++
+	if root.Left == nil {
+		if root.Right == nil {
+			if value == (value & -value) {
+				result++
+			}
+		} else {
+			count(root.Right, value)
 		}
-	}
-	if root.Left != nil {
+	} else if root.Right == nil {
 		count(root.Left, value)
-	}
-	if root.Right != nil {
+	} else {
+		count(root.Left, value)
 		count(root.Right, value)
 	}
 }
